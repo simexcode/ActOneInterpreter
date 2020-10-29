@@ -1,0 +1,13 @@
+C:\Users\mathi\source\repos\ActOneInterpreter\ActOneInterpreter\bin\Debug\netcoreapp3.1\ActOneInterpreter.exe
+C:\Users\mathi\source\repos\ActOneInterpreter\ActOneInterpreter\bin\Debug\netcoreapp3.1\ActOneInterpreter.deps.json
+C:\Users\mathi\source\repos\ActOneInterpreter\ActOneInterpreter\bin\Debug\netcoreapp3.1\ActOneInterpreter.runtimeconfig.json
+C:\Users\mathi\source\repos\ActOneInterpreter\ActOneInterpreter\bin\Debug\netcoreapp3.1\ActOneInterpreter.runtimeconfig.dev.json
+C:\Users\mathi\source\repos\ActOneInterpreter\ActOneInterpreter\bin\Debug\netcoreapp3.1\ActOneInterpreter.dll
+C:\Users\mathi\source\repos\ActOneInterpreter\ActOneInterpreter\bin\Debug\netcoreapp3.1\ActOneInterpreter.pdb
+C:\Users\mathi\source\repos\ActOneInterpreter\ActOneInterpreter\obj\Debug\netcoreapp3.1\ActOneInterpreter.csprojAssemblyReference.cache
+C:\Users\mathi\source\repos\ActOneInterpreter\ActOneInterpreter\obj\Debug\netcoreapp3.1\ActOneInterpreter.AssemblyInfoInputs.cache
+C:\Users\mathi\source\repos\ActOneInterpreter\ActOneInterpreter\obj\Debug\netcoreapp3.1\ActOneInterpreter.AssemblyInfo.cs
+C:\Users\mathi\source\repos\ActOneInterpreter\ActOneInterpreter\obj\Debug\netcoreapp3.1\ActOneInterpreter.csproj.CoreCompileInputs.cache
+C:\Users\mathi\source\repos\ActOneInterpreter\ActOneInterpreter\obj\Debug\netcoreapp3.1\ActOneInterpreter.dll
+C:\Users\mathi\source\repos\ActOneInterpreter\ActOneInterpreter\obj\Debug\netcoreapp3.1\ActOneInterpreter.pdb
+C:\Users\mathi\source\repos\ActOneInterpreter\ActOneInterpreter\obj\Debug\netcoreapp3.1\ActOneInterpreter.genruntimeconfig.cache
