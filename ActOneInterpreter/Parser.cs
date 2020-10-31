@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Text;
 
 namespace ActOneInterpreter {
@@ -23,6 +24,76 @@ namespace ActOneInterpreter {
                 currentToken = lexer.GetNextToken();
             else
                 Error();
+        }
+
+        private AST Program() {
+            //program : compound_statement DOT
+            var node = CompundStatement();
+            Eat(Token.DOT);
+            return node;
+        }
+
+        private AST CompundStatement() {
+            //compound_statement: BEGIN statement_list END
+
+            Eat(Token.BEGIN);
+            var nodes = StatementList();
+            Eat(Token.END);
+
+            var root = new Compound(nodes.ToArray());
+            return root;
+        }
+
+        private List<AST> StatementList() {
+            //statement_list : statement | statement SEMI statement_list
+            var node = Statement();
+            var results = new List<AST>();
+            results.Add(node);
+
+            while (currentToken.type == Token.SEMI) {
+                Eat(Token.SEMI);
+                results.Add(Statement());
+            }
+
+            if (currentToken.type == Token.ID) {
+                Error();
+            }
+
+            return results;
+        }
+
+        private AST Statement() {
+            //statement : compound_statement | assignment_statement | empty
+            if (currentToken.type == Token.BEGIN)
+                return CompundStatement();
+
+            if (currentToken.type == Token.ID)
+                return AssignmentStatement();
+
+            return Empty();
+        }
+
+        private AST AssignmentStatement() {
+            //assignment_statement : variable ASSIGN expr
+            var left = Variable();
+            var token = currentToken;
+            Eat(Token.ASSIGN);
+            var right = Expr();
+
+            var node = new Assign(left, token, right);
+            return node;
+        }
+
+        private AST Variable() {
+            // variable: ID
+            var node = new Var(currentToken);
+            Eat(Token.ID);
+            return node;
+        }
+
+        private AST Empty() {
+            //Empty operation. eg. { }
+            return new NoOp();
         }
 
         private AST Factor() {
@@ -56,6 +127,13 @@ namespace ActOneInterpreter {
                 Eat(Token.PLUS);
                 return new UnaryOp(token, Factor());
             }
+
+            //factor : variable
+            //--------------------------------
+            //if (token.type == Token.ID) {
+                //Eat(Token.ID);
+                return Variable();
+            //}
 
             Error();
             return null;
@@ -110,7 +188,13 @@ namespace ActOneInterpreter {
         }
 
         public AST Parse() {
-            return Expr();
+            var node = Program();
+
+            if (currentToken.type != Token.EOF) {
+                Error();
+            }
+
+            return node;
         }
     }
 }

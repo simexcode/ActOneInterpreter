@@ -10,6 +10,9 @@ namespace ActOneInterpreter {
     class Interpreter {
         private readonly Parser parser;
 
+        //this is our hacky symbol table aka abstract data type (ADT)
+        private Dictionary<string, dynamic> GLOBAL_SCOPE = new Dictionary<string, dynamic>();
+
         public Interpreter(string programText) {
             parser = new Parser(programText);
         }
@@ -30,17 +33,29 @@ namespace ActOneInterpreter {
         }
 
         private int VisitBinOp(BinOp node) {
-            if(node.op.type == Token.PLUS)
-                return Visit(node.left) + Visit(node.right);
+            if (node.op.type == Token.PLUS) {
+                var left = Visit(node.left);
+                var right = Visit(node.right);
+                return left + right;
+            }
 
-            if (node.op.type == Token.MINUS)
-                return Visit(node.left) - Visit(node.right);
+            if (node.op.type == Token.MINUS) {
+                var left = Visit(node.left);
+                var right = Visit(node.right);
+                return left - right;
+            }
 
-            if (node.op.type == Token.MUL)
-                return Visit(node.left) * Visit(node.right);
+            if (node.op.type == Token.MUL) {
+                var left = Visit(node.left);
+                var right = Visit(node.right);
+                return left * right;
+            }
 
-            if (node.op.type == Token.DIV)
-                return Visit(node.left) * Visit(node.right);
+            if (node.op.type == Token.DIV) {
+                var left = Visit(node.left);
+                var right = Visit(node.right);
+                return left / right;
+            }
 
             Error();
             return -1;
@@ -61,10 +76,32 @@ namespace ActOneInterpreter {
             return node.value;
         }
 
-        public string Interpret() {
+        private int VisitVar(Var node) {
+            var value = GLOBAL_SCOPE[node.value];
+            return value;
+        }
+
+        private int VisitAssign(Assign node) {
+            var name = (node.left as Var).value;
+            GLOBAL_SCOPE[name] = Visit(node.right);
+            return 0;
+        }
+
+        private int VisitCompound(Compound node) {
+            foreach (var statement in node.statements) {
+                Visit(statement);
+            }
+            return 0;
+        }
+
+        private int VisitNoOp(NoOp node) {
+            return 0;
+        }
+
+        public Dictionary<string, dynamic> Interpret() {
             var tree = parser.Parse();
-            
-            return Visit(tree).ToString();
+            Visit(tree);
+            return GLOBAL_SCOPE;
         }
  
     }
